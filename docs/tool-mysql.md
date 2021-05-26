@@ -7,9 +7,9 @@ Ambas portas podem ser mapeadas paras outras através da execução do container
 
 As seguintes versões do MySQL estão presentes:
 
-- MySQL 5.7 ricardopedias/docker-project:mysql57
-- MySQL 8.0 ricardopedias/docker-project:mysql80
-- MariaDB 10.5 ricardopedias/docker-project:mariadb105
+- MySQL 5.7 bueno-networks/docker-dev:mysql57
+- MySQL 8.0 bueno-networks/docker-dev:mysql80
+- MariaDB 10.5 bueno-networks/docker-dev:mariadb105
 
 ## Docker Compose
 
@@ -19,7 +19,7 @@ Um exemplo de configuração via Docker Compose:
 version: "3.1"
 services:
   mysql:
-    image: ricardopedias/docker-project:mysql80
+    image: bueno-networks/docker-dev:mysql80
     container_name: container-mysql
     volumes:
       - ./my-mysql/storage:/var/lib/mysql
