@@ -5,9 +5,9 @@ ser mapeada para uma outra através da execução do container via Docker ou Doc
 
 As seguintes versões da linguagem estão presentes:
 
-- PHP 5.6 ricardopedias/docker-project:php56
-- PHP 7.4 ricardopedias/docker-project:php74
-- PHP 8.0 ricardopedias/docker-project:php80
+- PHP 5.6 bueno-networks/docker-dev:php56
+- PHP 7.4 bueno-networks/docker-dev:php74
+- PHP 8.0 bueno-networks/docker-dev:php80
 
 ## Projeto de exemplo
 
