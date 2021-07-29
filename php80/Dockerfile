@@ -36,7 +36,8 @@ RUN apt-get -y --no-install-recommends install \
     build-essential \
     unzip \
     curl \
-    vim
+    vim \
+    git
 
 # PHP e extensões padrões
 RUN apt-get -y --no-install-recommends install \
@@ -88,6 +89,44 @@ RUN apt-get -y --no-install-recommends install \
     php8.0-yaml \
     php8.0-zmq
 
+# Kafka + Zookeeper
+RUN apt-get -y install php8.0-dev \
+    librdkafka++1 \
+    librdkafka-dev \
+    librdkafka1;
+
+# RUN apt-get -y install php-pear;
+
+# # Zookeeper
+# RUN git clone https://github.com/andreiz/php-zookeeper.git
+# RUN cd php-zookeeper; \
+#     phpize; \
+#     ./configure; \
+#     make; \
+#     make install; \
+#     cd ../; \
+#     rm -Rf php-zookeeper
+
+# # https://pecl.php.net/package/zookeeper
+# RUN curl -fsSL https://pecl.php.net/get/zookeeper-0.7.2.tgz | tar zxvf -
+# RUN cd zookeeper-0.7.2; \
+#     phpize; \
+#     ./configure --with-php-config=/usr/local/php/bin/php-config  --with-libzookeeper-dir=/usr/local/zookeeper; \
+#     make; \
+#     make install; \
+#     cd ../; \
+#     rm -Rf zookeeper-0.7.2
+
+# Kafka
+RUN git clone https://github.com/arnaud-lb/php-rdkafka.git;
+RUN cd php-rdkafka; \
+    phpize; \
+    ./configure; \
+    make all -j 5; \
+    make install \
+    cd ../; \
+    rm -Rf php-rdkafka
+
 # Nginx
 RUN apt-get -y --no-install-recommends install nginx;
 
@@ -108,8 +147,10 @@ RUN mv deployer.phar /usr/local/bin/dep
 RUN chmod +x /usr/local/bin/dep
 
 # Limpeza de caches
+RUN apt-get -y remove php-pear php8.0-dev librdkafka-dev
 RUN apt-get clean
 RUN rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /usr/share/doc/* ~/.composer
+
 #RUN echo "zend_extension=/usr/lib/php/20200930/xdebug.so" > /etc/php/8.0/mods-available/xdebug.ini
 RUN echo "xdebug.remote_enable=on" >> /etc/php/8.0/mods-available/xdebug.ini
 RUN echo "xdebug.remote_handler=dbgp" >> /etc/php/8.0/mods-available/xdebug.ini
@@ -120,6 +161,11 @@ RUN echo "xdebug.idekey=docker" >> /etc/php/8.0/mods-available/xdebug.ini
 RUN echo "xdebug.mode=coverage" >> /etc/php/8.0/mods-available/xdebug.ini
 
 ADD overrides.conf /etc/php/8.0/fpm/pool.d/z-overrides.conf
+ADD php-ini-overrides.ini /etc/php/8.0/fpm/conf.d/99-overrides.ini
+# ADD rdkafka.ini /etc/php/8.0/cli/conf.d/20-zookeeper.ini
+ADD rdkafka.ini /etc/php/8.0/cli/conf.d/20-rdkafka.ini
+# ADD rdkafka.ini /etc/php/8.0/fpm/conf.d/20-zookeeper.ini
+ADD rdkafka.ini /etc/php/8.0/fpm/conf.d/20-rdkafka.ini
 ADD php-ini-overrides.ini /etc/php/8.0/fpm/conf.d/99-overrides.ini
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
