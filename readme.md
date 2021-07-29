@@ -75,13 +75,14 @@ networks:
 
 Para conectar ao banco de dados, as seguintes informações estão previamente configuradas:
 
-Senha do usuaário root: devel
-Nome do Banco: devel
-Usuario padrão: devel
-Senha usuario padrão: devel
+Diretiva               | Valor
+---------------------- | -------
+Senha do usuário root: | devel 
+Nome do Banco:         | devel
+Usuario padrão:        | devel
+Senha usuario padrão:  |devel
 
-Caso seja necessário mudar a configuração padrão, basta adicionar as
-diretivas correspondentes no parâmetro "environment" no arquivo docker-compose.yml:
+Caso seja necessário mudar a configuração padrão, basta adicionar as diretivas correspondentes no parâmetro "environment" no arquivo docker-compose.yml:
 
 - MYSQL_ROOT_PASSWORD
 - MYSQL_DATABASE
