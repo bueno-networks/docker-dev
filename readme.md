@@ -72,3 +72,31 @@ networks:
   my-network:
     driver: bridge
 ```
+
+Para conectar ao banco de dados, as seguintes informações estão previamente configuradas:
+
+Senha do usuaário root: devel
+Nome do Banco: devel
+Usuario padrão: devel
+Senha usuario padrão: devel
+
+Caso seja necessário mudar a configuração padrão, basta adicionar as
+diretivas correspondentes no parâmetro "environment" no arquivo docker-compose.yml:
+
+- MYSQL_ROOT_PASSWORD
+- MYSQL_DATABASE
+- MYSQL_USER
+- MYSQL_PASSWORD
+
+Por exemplo: 
+
+```
+services:
+  mysql:
+    image: bnwdocker/dev-images:mysql80
+    container_name: container-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: example
+    volumes:
+      - ./my-mysql/storage:/var/lib/mysql
+```
