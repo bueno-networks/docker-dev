@@ -45,7 +45,7 @@ apontando-o como volume no docker-compose.yml. Por exemplo:
       - ./nginx.conf:/etc/nginx/conf.d/default.conf
 ```
 
-## Imagems do MySQL
+## Imagens do MySQL
 
 As imagens do MySQL já vem com PHPMyAdmin configurado na porta 80.
 
