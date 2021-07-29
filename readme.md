@@ -7,7 +7,9 @@ Este repositório contém imagens contendo instalações pré-configuradas e exc
 
 As imagens não foram criadas para utilização em ambientes de produção! São imagens grandes, contendo ferramentas e extensões que podem ser desnecessárias para outro fim que não seja o uso para desenvolvimento.
 
-## Linguagens
+## Imagens do PHP
+
+As imagens já vêm com servidor web NGINX instalado e configurado na porta 80.
 
 - PHP 7.4
 - PHP 8.0
@@ -33,7 +35,19 @@ networks:
     driver: bridge
 ```
 
-## Bancos de Dados SQL
+Por padrão, o domínio "localhost" é mapeado para o diretório 'public/' da aplicação.
+Para mudar isso, basta adicionar um arquivo de configuração (nginx.conf) personalizado,
+apontando-o como volume no docker-compose.yml. Por exemplo:
+
+```
+    volumes:
+      - .:/application
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf
+```
+
+## Imagems do MySQL
+
+As imagens do MySQL já vem com PHPMyAdmin configurado na porta 80.
 
 - MySQL 5.7
 - MySQL 8.0
@@ -49,8 +63,8 @@ services:
     volumes:
       - ./my-mysql/storage:/var/lib/mysql
     ports:
-      - "8080:80"
-      - "9090:3306"
+      - "4040:80"
+      - "5050:3306"
     networks:
       - my-network
 
