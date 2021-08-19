@@ -26,7 +26,6 @@ services:
       - .:/application
     ports:
       - "8080:80"
-      - "9090:3306"
     networks:
       - my-network
 
